@@ -62,7 +62,11 @@ router.route('/allbooks')
    
 router.route('/mybooks')
     .get((req, res) => {
-    
+        User.findOne({ userName: req.body.userName }).then((user) => {
+            res.json(user.books)
+        }, (e) => {
+            res.status(400).send(e);
+        })
     })
     .put((req, res) => {
         const newBook = {title: req.body.result.title, thumbnail: req.body.result.thumbnail};

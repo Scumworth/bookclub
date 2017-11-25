@@ -11,16 +11,20 @@ class AllBooksContainer extends Component {
         this.props.getAllBooks(this.props.baseUrl);
     }
     render() {
-    //store.dispatch(push('/allbooks'));
         return (
             <div>
-                <AllBooks />
+                <AllBooks
+                    allBooksResults = { this.props.allBooksResults }
+                />
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
+    const { allBooks } = state;
+    const { allBooksLoaded, isFetchingAllBooks, allBooksResults } = allBooks;
+    return { allBooksLoaded, isFetchingAllBooks, allBooksResults };
 };
 
 const mapDispatchToProps = (dispatch) => {

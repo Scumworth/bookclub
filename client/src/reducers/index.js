@@ -70,3 +70,51 @@ export const book = (state = {
             return state;
     }
 }
+
+export const allBooks = (state = {
+    allBooksLoaded: false,
+    isFetchingAllBooks: false,
+    allBooksResults: []
+}, action) => {
+    switch (action.type) {
+        case REQUEST_ALL_BOOKS:
+            return {
+                ...state,
+                isFetchingAllBooks: true
+            }
+        case RECEIVE_ALL_BOOKS:
+            return {
+                ...state,
+                isFetchingAllBooks: false,
+                allBooksLoaded: true,
+                allBooksResults: action.allBooksResults
+            }
+        default:
+            return state;
+    }
+}
+
+export const myBooks = (state = {
+    myBooksLoaded: false,
+    isFetchingMyBooks: false,
+    myBooksResults: []
+}, action) => {
+    switch (action.type) {
+        case REQUEST_MY_BOOKS:
+            return {
+                ...state,
+                isFetchingMyBooks: true
+            }
+        case RECEIVE_MY_BOOKS:
+            return {
+                ...state,
+                isFetchingMyBooks: false,
+                myBooksLoaded: true,
+                myBooksResults: action.myBooksResults
+            }
+         default: 
+            return state;
+    }
+}
+
+

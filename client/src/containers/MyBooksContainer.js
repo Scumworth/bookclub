@@ -5,22 +5,33 @@ import { connect } from 'react-redux';
 import MyBooks from './../components/MyBooks';
 import axios from 'axios';
 import books from 'google-books-search';
-import { selectTitle } from './../actions';
+import { selectTitle, getMyBooks } from './../actions';
 
 class MyBooksContainer extends Component {
+    componentDidMount() {
+       this.props.getMyBooks(this.props.baseUrl, this.props.userName); 
+    }
     render() {
         return (
             <div>
-                <MyBooks baseUrl = { this.props.baseUrl } handleSubmit = { this.props.handleSubmit } selectedTitle = { this.props.title } handleChange = { this.props.handleChange } userName = { this.props.userName } />
+                <MyBooks 
+                    baseUrl = { this.props.baseUrl } 
+                    handleSubmit = { this.props.handleSubmit } 
+                    selectedTitle = { this.props.title } 
+                    handleChange = { this.props.handleChange } 
+                    userName = { this.props.userName } 
+                    myBooksResults = { this.props.myBooksResults }
+                />
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    const { book } = state;
+    const { book, myBooks } = state;
     const { title } = book;
-    return { title };
+    const { myBooksLoaded, isFetchingMyBooks, myBooksResults } = myBooks;
+    return { title, myBooksLoaded, isFetchingMyBooks, myBooksResults };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -50,6 +61,9 @@ const mapDispatchToProps = (dispatch) => {
             const target = e.target;
             const value = target.value;
             dispatch(selectTitle(value));
+        },
+        getMyBooks: (baseUrl, userName) => {
+            dispatch(getMyBooks(baseUrl, userName));
         },
         dispatch
     }

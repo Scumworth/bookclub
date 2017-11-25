@@ -25,8 +25,9 @@ export const requestAllBooks = () => ({
     type: REQUEST_ALL_BOOKS
 });
 
-export const receiveAllBooks = () => ({
-    type: RECEIVE_ALL_BOOKS
+export const receiveAllBooks = (data) => ({
+    type: RECEIVE_ALL_BOOKS,
+    allBooksResults: data.map(book => ({...book}))
 });
 
 export const getAllBooks = (baseUrl) => dispatch => {
@@ -45,13 +46,16 @@ export const requestMyBooks = () => ({
     type: REQUEST_MY_BOOKS
 });
 
-export const receiveMyBooks = () => ({
-    type: RECEIVE_MY_BOOKS
+export const receiveMyBooks = (data) => ({
+    type: RECEIVE_MY_BOOKS,
+    myBooksResults: data.map(book => ({...book}))
 });
 
-export const getMyBooks = (baseUrl) => dispatch => {
+export const getMyBooks = (baseUrl, userName) => dispatch => {
     dispatch(requestMyBooks);
-    axios.get(`${baseUrl}/mybooks`)
+    axios.get(`${baseUrl}/mybooks`, {
+        userName
+    })
         .then(res => {
             return res.data
         }, e => console.log(e))

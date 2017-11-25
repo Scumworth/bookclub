@@ -1,10 +1,14 @@
 // components/AllBooks.js
 
 import React from 'react';
+import AllSingleBook from './AllSingleBook';
 
-const AllBooks = () => (
+const AllBooks = ({ allBooksResults }) => (
     <div>
-        <h1>All Books Component</h1>
+        { allBooksResults.length !== 0
+                ? allBooksResults.map(result => <AllSingleBook/>)
+                : null
+        }
     </div>
 );
 

@@ -2,9 +2,14 @@
 
 import React from 'react';
 import { Form, FormControl, Button, Row, Col } from 'react-bootstrap';
+import MySingleBook from './MySingleBook';
 
-const MyBooks = ({ handleSubmit, handleChange, baseUrl, selectedTitle, userName }) => (
+const MyBooks = ({ handleSubmit, handleChange, baseUrl, selectedTitle, userName, myBooksResults }) => (
     <div>
+        { myBooksResults.length !== 0
+                ? myBooksResults.map(result => <MySingleBook/>)
+                : null
+        }
         <Form>
             <Row>
                 <Col xs = { 10 }> 
