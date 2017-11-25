@@ -1,16 +1,19 @@
 // store.js
 
-import { createStore, applyMiddleware } from 'redux';
-import { routerMiddleware } from 'react-router-redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { routerMiddleware, routerReducer } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
-import reducer from './reducers';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+import * as reducers from './reducers'
 
 export const history = createHistory();
 let middleware = [thunk, routerMiddleware(history), logger];
 const store = createStore(
-    reducer,
+    combineReducers({
+        ...reducers,
+        router: routerReducer
+    }),
     applyMiddleware(...middleware)
 );
 

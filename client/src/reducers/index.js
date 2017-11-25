@@ -1,28 +1,72 @@
 // reducers/index.js
 
-import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
 import {
-    LOGIN_USER
+    LOGIN_USER,
+    APPLY_SETTINGS,
+    REQUEST_ALL_BOOKS,
+    RECEIVE_ALL_BOOKS,
+    REQUEST_MY_BOOKS,
+    RECEIVE_MY_BOOKS,
+    SELECT_TITLE
 } from '../actions';
 
-const login = (state = {
-    status: false
+export const login = (state = {
+    status: false,
+    userName: null
 }, action) => {
     switch (action.type) {
         case LOGIN_USER:
             return {
                 ...state,
-                status: true
+                status: true,
+                userName: action.user
             }
         default:
             return state;
     }
 }
 
-const bookClub = combineReducers({
-    router: routerReducer,
-    login
-});
+//below code makes @@router/LOCATION_CHANGE action result in rerender
+export const location = (state = {
+    url: "/"
+}, action) => {
+    switch (action.type) {
+        case '@@router/LOCATION_CHANGE':
+            return {
+                ...state,
+                url: action.payload.pathname
+            }
+         default:
+            return state;
+    }
+}   
 
-export default bookClub;
+export const settings = (state = {
+}, action) => {
+    switch (action.type) {
+        case APPLY_SETTINGS:
+            return {
+                ...state,
+                firstName: action.firstName,
+                lastName: action.lastName,
+                city: action.city,
+                geoState: action.geoState
+            }
+         default:
+            return state;
+    }
+}
+
+export const book = (state = {
+    title: null,
+}, action) => {
+    switch (action.type) {
+        case SELECT_TITLE:
+            return {
+                ...state,
+                title: action.title
+            }
+        default:
+            return state;
+    }
+}

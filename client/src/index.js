@@ -16,7 +16,7 @@ ReactDOM.render(
         <ConnectedRouter history = { history }>
             <div>
                 <App 
-                    url = "http://localhost:3000"
+                    baseUrl = "http://localhost:3001/api"
                 />
             </div>
         </ConnectedRouter>
@@ -24,4 +24,6 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
+//baseUrl hardcoded above change when deploying
 //registerServiceWorker();
+
