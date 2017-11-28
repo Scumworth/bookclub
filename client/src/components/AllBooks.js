@@ -3,10 +3,13 @@
 import React from 'react';
 import AllSingleBook from './AllSingleBook';
 
-const AllBooks = ({ allBooksResults }) => (
-    <div>
+const AllBooks = ({ allBooksResults, handleRequest }) => (
+    <div style = {{ textAlign: 'center' }}>
         { allBooksResults.length !== 0
-                ? allBooksResults.map(result => <AllSingleBook/>)
+            ? allBooksResults.map(result => <AllSingleBook 
+                title = { result.title } 
+                handleRequest = { handleRequest }
+                thumbnail = { result.thumbnail }/>)
                 : null
         }
     </div>

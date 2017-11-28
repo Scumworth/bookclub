@@ -39,7 +39,36 @@ router.route('/users')
             res.status(400).send(e);
         });
     })
-
+    .patch((req, res) => {
+        const newBook = {title: req.body.title, thumbnail: req.body.thumbnail};
+        User.findOne({ userName: req.body.userName }).then((user) => {
+            let placement = false;
+            for (let i = 0; i < user.books.length; i++) {
+                if(user.books[i].title === req.body.title){
+                    placement = true;
+                }
+            }
+            if(user && !placement) {
+                User.findOneAndUpdate(
+                    { userName: req.body.userName },
+                    { $set: { books: user.books.concat([newBook])}}
+                ).then(() => {
+                    res.send({ message: 'Book has been added to user.'});
+                }, (e) => res.status(400).send(e));
+            }
+            else if(user && placement) {
+                User.findOneAndUpdate(
+                    { userName: req.body.userName },
+                    { $set: { books: user.books.filter(book => book.title !== req.body.title) }}
+                ).then(() => {
+                    res.send({ message: 'Book has been removed from user' })
+                }, (e) => res.status(400).send(e))
+            }
+        }, (e) => {
+            res.status(400).send(e);
+        })
+    })
+    
 router.route('/allbooks')
     .get((req, res) => {
         Book.find({}).then((books) => {
@@ -50,8 +79,8 @@ router.route('/allbooks')
     })
     .post((req, res) => {
         const book = new Book({
-            title: req.body.result.title,
-            thumbnail: req.body.result.thumbnail
+            title: req.body.title,
+            thumbnail: req.body.thumbnail
         })
         book.save().then((book) => {
             res.send({ message: 'Book added.'});
@@ -62,28 +91,43 @@ router.route('/allbooks')
    
 router.route('/mybooks')
     .get((req, res) => {
-        User.findOne({ userName: req.body.userName }).then((user) => {
+        const userName = req.query.userName;
+        User.findOne({ userName: userName }).then((user) => {
             res.json(user.books)
         }, (e) => {
             res.status(400).send(e);
         })
     })
-    .put((req, res) => {
-        const newBook = {title: req.body.result.title, thumbnail: req.body.result.thumbnail};
-        User.findOne({ userName: req.body.userName }).then((user) => {
-            if(user && user.books.indexOf(newBook) === -1) {
-                User.findOneAndUpdate(
-                    { userName: req.body.userName },
-                    { $set: { books: user.books.concat([newBook])}}
-                ).then((book) => {
-                    res.send({ message: 'Book has been added to user.'});
+    .patch((req, res) => {
+        Book.findOne({ title: req.body.title }).then((book) => {
+            console.log(book.users.indexOf(req.body.userName));
+            if(book && book.users.indexOf(req.body.userName) === -1) {
+                Book.findOneAndUpdate(
+                    { title: req.body.title },
+                    { $set: { users: book.users.concat([req.body.userName])}}
+                ).then(() => {
+                    res.send({ message: 'User has been added to book.'});
                 }, (e) => res.status(400).send(e));
             }
-        }, (e) => {
-            res.status(400).send(e);
+            else if (book && book.users.indexOf(req.body.userName) !== -1) {
+                Book.findOneAndUpdate(
+                    { title: req.body.title },
+                    { $set: { users: book.users.filter(user => user !== req.body.userName) } },
+                    { new: true }
+                ).then((book) => {
+                    res.send({ message: 'User had been removed from book' })
+                    if(book.users.length === 0){
+                        Book.remove({ title: req.body.title }).then(book => {
+                            console.log(`${book.title} has no more users so it has been removed`);
+                        }, (e) => res.status(400).send(e))
+                    }
+                }, (e) => res.status(400).send(e));
+            }
+        }, (e) => {res.status(400).send(e);
         })
     })
-    
+
+        
 
 app.use('/api', router);
 

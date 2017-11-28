@@ -1,7 +1,7 @@
 // components/Settings.js
 
 import React from 'react';
-import { Form, FormGroup, FormControl, Button, Row, Col } from 'react-bootstrap';
+import { Form, FormControl, Button, Row, Col } from 'react-bootstrap';
 
 const Settings = ({ handleSubmit }) => (
     <div style = {{ textAlign: 'center', margin: 50 }}>

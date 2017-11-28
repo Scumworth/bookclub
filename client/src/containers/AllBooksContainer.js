@@ -15,6 +15,7 @@ class AllBooksContainer extends Component {
             <div>
                 <AllBooks
                     allBooksResults = { this.props.allBooksResults }
+                    handleRequest = { this.props.handleRequest }
                 />
             </div>
         );
@@ -31,6 +32,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getAllBooks: (baseUrl) => {
             dispatch(getAllBooks(baseUrl));
+        },
+        handleRequest: (e, baseUrl) => {
+            e.preventDefault();
         },
         dispatch
     }

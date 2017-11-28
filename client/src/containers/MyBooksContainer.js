@@ -21,6 +21,7 @@ class MyBooksContainer extends Component {
                     handleChange = { this.props.handleChange } 
                     userName = { this.props.userName } 
                     myBooksResults = { this.props.myBooksResults }
+                    handleRemove = { this.props.handleRemove } 
                 />
             </div>
         );
@@ -42,12 +43,24 @@ const mapDispatchToProps = (dispatch) => {
                 if(!error) {
                     console.log(results);
                     if (results.length > 0) {
-                        axios.put(`${baseUrl}/mybooks`, {
-                            result: results[0],
+                        axios.patch(`${baseUrl}/users`, {
+                            title: results[0].title,
+                            thumbnail: results[0].thumbnail,
                             userName
                         })
+                            .then((response)=> {
+                                console.log(response);
+                                dispatch(getMyBooks(baseUrl, userName))
+                            })
+                            .catch(e => console.log(e));
                         axios.post(`${baseUrl}/allbooks`, {
-                            result: results[0]
+                            title: results[0].title,
+                            thumbnail: results[0].thumbnail
+                        })
+                            .catch(e => console.log(e));
+                        axios.patch(`${baseUrl}/mybooks`, {
+                            title: results[0].title,
+                            userName
                         })
                     } 
                 }
@@ -55,6 +68,23 @@ const mapDispatchToProps = (dispatch) => {
                     console.log(error)
                 }
             });
+        },
+        handleRemove: (e, baseUrl, userName, title, thumbnail) => {
+            e.preventDefault();
+            axios.patch(`${baseUrl}/users`, {
+                title,
+                thumbnail,
+                userName
+            }).then((response) => {
+                console.log(response);
+                dispatch(getMyBooks(baseUrl, userName))
+                })
+                .catch(e => console.log(e));
+            axios.patch(`${baseUrl}/mybooks`, {
+                title,
+                userName
+            }).then(() => console.log('hello'))
+                .catch(e => console.log(e));
         },
         handleChange: (e) => {
             e.preventDefault();

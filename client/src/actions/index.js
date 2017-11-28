@@ -54,7 +54,7 @@ export const receiveMyBooks = (data) => ({
 export const getMyBooks = (baseUrl, userName) => dispatch => {
     dispatch(requestMyBooks);
     axios.get(`${baseUrl}/mybooks`, {
-        userName
+        params: {userName: userName}
     })
         .then(res => {
             return res.data

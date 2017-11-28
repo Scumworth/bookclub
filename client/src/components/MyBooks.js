@@ -4,10 +4,16 @@ import React from 'react';
 import { Form, FormControl, Button, Row, Col } from 'react-bootstrap';
 import MySingleBook from './MySingleBook';
 
-const MyBooks = ({ handleSubmit, handleChange, baseUrl, selectedTitle, userName, myBooksResults }) => (
-    <div>
+const MyBooks = ({ handleSubmit, handleRemove, handleChange, baseUrl, selectedTitle, userName, myBooksResults }) => (
+    <div style = {{ textAlign: 'center' }}>
         { myBooksResults.length !== 0
-                ? myBooksResults.map(result => <MySingleBook/>)
+                ? myBooksResults.map(result => <MySingleBook 
+                    title = { result.title } 
+                    thumbnail = { result.thumbnail } 
+                    handleRemove = { handleRemove } 
+                    baseUrl = { baseUrl }
+                    userName = { userName }
+                    />)
                 : null
         }
         <Form>
