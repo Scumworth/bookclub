@@ -76,7 +76,7 @@ const mapDispatchToProps = (dispatch) => {
                 geoState
             })
                 .then(() => {
-                    dispatch(changeSettings());
+                    dispatch(changeSettings);
                 })
                 .catch(e => console.log(error));
             
