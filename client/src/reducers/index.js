@@ -15,7 +15,8 @@ import {
     REQUEST_MY_REQUESTS,
     RECEIVE_MY_REQUESTS,
     REQUEST_ALL_REQUESTS,
-    RECEIVE_ALL_REQUESTS
+    RECEIVE_ALL_REQUESTS,
+    CHANGE_SETTINGS
 } from '../actions';
 
 export const login = (state = {
