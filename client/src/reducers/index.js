@@ -53,7 +53,8 @@ export const settings = (state = {
     firstName: null,
     lastName: null,
     city: null,
-    geoState: null
+    geoState: null,
+    settingsChange: false,
 }, action) => {
     switch (action.type) {
          case SELECT_FIRST_NAME:
@@ -75,6 +76,11 @@ export const settings = (state = {
             return {
                 ...state,
                geoState: action.geoState
+            }
+         case CHANGE_SETTINGS:
+            return {
+                ...state,
+                settingsChanged: true
             }
          default:
             return state;

@@ -2,9 +2,8 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import Settings from './../components/Settings';
-import { selectFirstName, selectLastName, selectGeoState, selectCity } from './../actions';
+import { selectFirstName, selectLastName, selectGeoState, selectCity, changeSettings } from './../actions';
 import axios from 'axios';
 
 class SettingsContainer extends Component {
@@ -24,6 +23,11 @@ class SettingsContainer extends Component {
                     lastName = { this.props.lastName }
                     userName = { this.props.userName }
                 />
+                {
+                    this.props.settingsChanged
+                        ? <p>Settings have been updated.</p> 
+                        : null
+                }
             </div>
         );
     }
@@ -31,8 +35,8 @@ class SettingsContainer extends Component {
 
 const mapStateToProps = (state) => {
     const { settings } = state;    
-    const { firstName, lastName, city, geoState } = settings;
-    return { firstName, lastName, city, geoState };
+    const { firstName, lastName, city, geoState, settingsChanged } = settings;
+    return { firstName, lastName, city, geoState, settingsChanged };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -72,7 +76,7 @@ const mapDispatchToProps = (dispatch) => {
                 geoState
             })
                 .then(() => {
-                    store.dispatch(push('/'));
+                    dispatch(changeSettings());
                 })
                 .catch(e => console.log(error));
             
