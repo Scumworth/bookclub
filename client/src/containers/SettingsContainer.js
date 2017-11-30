@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Settings from './../components/Settings';
-import { selectFirstName, selectLastName, selectGeoState, selectCity, changeSettings } from './../actions';
+import { selectFirstName, selectLastName, selectGeoState, selectCity } from './../actions';
 import axios from 'axios';
 
 class SettingsContainer extends Component {
@@ -76,7 +76,7 @@ const mapDispatchToProps = (dispatch) => {
                 geoState
             })
                 .then(() => {
-                    dispatch(changeSettings);
+                    console.log('settings changed');
                 })
                 .catch(e => console.log(error));
             

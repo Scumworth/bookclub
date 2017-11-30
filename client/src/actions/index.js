@@ -15,7 +15,6 @@ export const SELECT_CITY = 'SELECT_CITY';
 export const SELECT_GEO_STATE = 'SELECT_GEO_STATE';
 export const SELECT_FIRST_NAME = 'SELECT_FIRST_NAME';
 export const SELECT_LAST_NAME = 'SELECT_LAST_NAME';
-export const CHANGE_SETTINGS = 'CHANGE_SETTINGS';
 
 export const login = (user) => ({
     type: LOGIN_USER,
@@ -28,10 +27,6 @@ export const applySettings = (firstName, lastName, city, geoState) => ({
     lastName,
     city,
     geoState
-});
-
-export const changeSettings = () => ({
-    type: CHANGE_SETTINGS
 });
 
 export const requestAllBooks = () => ({

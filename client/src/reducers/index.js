@@ -16,7 +16,6 @@ import {
     RECEIVE_MY_REQUESTS,
     REQUEST_ALL_REQUESTS,
     RECEIVE_ALL_REQUESTS,
-    CHANGE_SETTINGS
 } from '../actions';
 
 export const login = (state = {
@@ -54,8 +53,7 @@ export const settings = (state = {
     firstName: null,
     lastName: null,
     city: null,
-    geoState: null,
-    settingsChanged: false,
+    geoState: null
 }, action) => {
     switch (action.type) {
          case SELECT_FIRST_NAME:
@@ -77,11 +75,6 @@ export const settings = (state = {
             return {
                 ...state,
                geoState: action.geoState
-            }
-         case CHANGE_SETTINGS:
-            return {
-                ...state,
-                settingsChanged: true
             }
          default:
             return state;
