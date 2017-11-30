@@ -72,7 +72,7 @@ const mapDispatchToProps = (dispatch) => {
                 geoState
             })
                 .then(() => {
-                    dispatch(push('/'));
+                    store.dispatch(push('/'));
                 })
                 .catch(e => console.log(error));
             
