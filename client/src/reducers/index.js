@@ -8,6 +8,10 @@ import {
     REQUEST_MY_BOOKS,
     RECEIVE_MY_BOOKS,
     SELECT_TITLE,
+    SELECT_FIRST_NAME,
+    SELECT_LAST_NAME,
+    SELECT_GEO_STATE,
+    SELECT_CITY,
     REQUEST_MY_REQUESTS,
     RECEIVE_MY_REQUESTS,
     REQUEST_ALL_REQUESTS,
@@ -46,15 +50,31 @@ export const location = (state = {
 }   
 
 export const settings = (state = {
+    firstName: null,
+    lastName: null,
+    city: null,
+    geoState: null
 }, action) => {
     switch (action.type) {
-        case APPLY_SETTINGS:
+         case SELECT_FIRST_NAME:
             return {
                 ...state,
-                firstName: action.firstName,
-                lastName: action.lastName,
-                city: action.city,
-                geoState: action.geoState
+                firstName: action.firstName
+            }
+         case SELECT_LAST_NAME:
+            return {
+                ...state,
+                lastName: action.lastName
+            }
+         case SELECT_CITY:
+            return {
+                ...state,
+                city: action.city
+            }
+         case SELECT_GEO_STATE:
+            return {
+                ...state,
+               geoState: action.geoState
             }
          default:
             return state;

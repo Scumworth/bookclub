@@ -69,6 +69,19 @@ router.route('/users')
             res.status(400).send(e);
         })
     })
+
+router.route('/settings')
+    .patch((req, res) => {
+            User.findOneAndUpdate(
+                { userName: req.body.userName },
+                { $set: { firstName: req.body.firstName,
+                    lastName: req.body.lastName, city: req.body.city,
+                    geoState: req.body.geoState 
+                }}
+            ).then(() => {
+                res.send({ message: 'Users settings have been updated' })
+            }, (e) => res.status(400).send(e))
+    })
     
 router.route('/allbooks')
     .get((req, res) => {

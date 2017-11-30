@@ -8,7 +8,7 @@ const UserSchema = new Schema ({
     firstName: { type: String },
     lastName: { type: String },
     city: { type: String },
-    state: { type: String },
+    geoState: { type: String },
     books: [{title: { type: String }, thumbnail: { type: String }}] 
 });
 

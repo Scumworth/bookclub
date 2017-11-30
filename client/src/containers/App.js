@@ -41,7 +41,7 @@ class App extends Component {
                             getMyRequests = { this.props.getMyRequests }
                             handleCancel = { this.props.handleCancel }
                             /> } />
-                    <Route path = "/settings" render = { () => <SettingsContainer baseUrl = { this.props.baseUrl } /> } />
+                    <Route path = "/settings" render = { () => <SettingsContainer baseUrl = { this.props.baseUrl } userName = { this.props.userName }/> } />
                 </Switch>
                 <Footer />
             </div>

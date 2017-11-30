@@ -3,14 +3,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Settings from './../components/Settings';
-import { applySettings } from './../actions';
+import { selectFirstName, selectLastName, selectGeoState, selectCity } from './../actions';
 import axios from 'axios';
 
 class SettingsContainer extends Component {
     render() {
         return (
             <div>
-                <Settings handleSubmit = { this.props.handleSubmit } />
+                <Settings 
+                    baseUrl = { this.props.baseUrl }
+                    handleSubmit = { this.props.handleSubmit } 
+                    handleChangeFirstName = { this.props.handleChangeFirstName }
+                    handleChangeLastName = { this.props.handleChangeLastName }
+                    handleChangeGeoState = { this.props.handleChangeGeoState }
+                    handleChangeCity = { this.props.handleChangeCity }
+                    city  = { this.props.city }
+                    geoState = { this.props.geoState }
+                    firstName = { this.props.firstName }
+                    lastName = { this.props.lastName }
+                />
             </div>
         );
     }
@@ -24,19 +35,40 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        handleChange: (e) => {
+        handleChangeFirstName: (e) => {
             e.preventDefault();
+            const target = e.target;
+            const value = target.value;
+            dispatch(selectFirstName(value));
         },
-        handleSubmit: (e, firstName, lastName, city, geoState) => {
+        handleChangeLastName: (e) => {
             e.preventDefault();
-            axios.put(`${ this.props.baseUrl }/users`, {
+            const target = e.target;
+            const value = target.value;
+            dispatch(selectLastName(value));
+        },
+        handleChangeGeoState: (e) => {
+            e.preventDefault();
+            const target = e.target;
+            const value = target.value;
+            dispatch(selectGeoState(value));
+        },
+        handleChangeCity: (e) => {
+            e.preventDefault();
+            const target = e.target;
+            const value = target.value;
+            dispatch(selectCity(value));
+
+        },
+        handleSubmit: (e, baseUrl, firstName, lastName, city, geoState, userName) => {
+            e.preventDefault();
+            axios.patch(`${ baseUrl }/settings`, {
+                userName,
                 firstName,
                 lastName,
                 city,
                 geoState
             })
-            dispatch(applySettings(firstName, lastName, city, geoState));
-            
         },
         dispatch
     }

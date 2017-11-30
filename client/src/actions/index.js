@@ -11,6 +11,10 @@ export const REQUEST_MY_REQUESTS = 'REQUEST_MY_REQUESTS';
 export const RECEIVE_MY_REQUESTS = 'RECEIVE_MY_REQUESTS';
 export const REQUEST_ALL_REQUESTS = 'REQUEST_ALL_REQUESTS';
 export const RECEIVE_ALL_REQUESTS = 'RECEIVE_ALL_REQUESTS';
+export const SELECT_CITY = 'SELECT_CITY';
+export const SELECT_GEO_STATE = 'SELECT_GEO_STATE';
+export const SELECT_FIRST_NAME = 'SELECT_FIRST_NAME';
+export const SELECT_LAST_NAME = 'SELECT_LAST_NAME';
 
 export const login = (user) => ({
     type: LOGIN_USER,
@@ -114,3 +118,24 @@ export const selectTitle = (title) => ({
     type: SELECT_TITLE,
     title
 });
+
+export const selectFirstName = (firstName) => ({
+    type: SELECT_FIRST_NAME,
+    firstName
+});
+
+export const selectLastName = (lastName) => ({
+    type: SELECT_LAST_NAME,
+    lastName
+});
+
+export const selectGeoState = (geoState) => ({
+    type: SELECT_GEO_STATE,
+    geoState
+});
+
+export const selectCity = (city) => ({
+    type: SELECT_CITY,
+    city
+});
+

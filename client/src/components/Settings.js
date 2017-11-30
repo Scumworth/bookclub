@@ -3,7 +3,9 @@
 import React from 'react';
 import { Form, FormControl, Button, Row, Col } from 'react-bootstrap';
 
-const Settings = ({ handleSubmit }) => (
+const Settings = ({ handleSubmit, handleChangeFirstName, handleChangeLastName,
+    handleChangeGeoState, handleChangeCity, baseUrl, city, geoState, firstName, lastName
+}) => (
     <div style = {{ textAlign: 'center', margin: 50 }}>
     <Form>
         <h1>Update Settings</h1>
@@ -15,6 +17,7 @@ const Settings = ({ handleSubmit }) => (
                 <FormControl
                     type = "text"
                     placeholder = "Jane"
+                    onChange = { handleChangeFirstName }
                 />
             </Col>
         </Row>
@@ -26,6 +29,7 @@ const Settings = ({ handleSubmit }) => (
                 <FormControl
                     type = "text"
                     placeholder = "Doe"
+                    onChange = { handleChangeLastName }
                 />
             </Col>
         </Row>
@@ -37,6 +41,7 @@ const Settings = ({ handleSubmit }) => (
                 <FormControl
                     type = "text"
                     placeholder = "Exampleville"
+                    onChange = { handleChangeCity }
                 />
             </Col>
         </Row>
@@ -48,11 +53,12 @@ const Settings = ({ handleSubmit }) => (
                 <FormControl
                     type = "text"
                     placeholder = "Examplevannia"
+                    onChange = { handleChangeGeoState }
                 />
             </Col>
         </Row>
         <Row>
-            <Button type = "submit" onClick = { handleSubmit }>
+            <Button type = "submit" onClick = { (e) => handleSubmit(e, baseUrl, firstName, lastName, city, geoState, userName) }>
                 Submit
             </Button>
         </Row>
