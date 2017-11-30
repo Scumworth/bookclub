@@ -55,7 +55,7 @@ export const settings = (state = {
     lastName: null,
     city: null,
     geoState: null,
-    settingsChange: false,
+    settingsChanged: false,
 }, action) => {
     switch (action.type) {
          case SELECT_FIRST_NAME:
