@@ -69,6 +69,7 @@ const mapDispatchToProps = (dispatch) => {
                 city,
                 geoState
             })
+            
         },
         dispatch
     }
