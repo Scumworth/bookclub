@@ -35,8 +35,8 @@ class SettingsContainer extends Component {
 
 const mapStateToProps = (state) => {
     const { settings } = state;    
-    const { firstName, lastName, city, geoState, settingsChanged } = settings;
-    return { firstName, lastName, city, geoState, settingsChanged };
+    const { firstName, lastName, city, geoState } = settings;
+    return { firstName, lastName, city, geoState };
 };
 
 const mapDispatchToProps = (dispatch) => {
