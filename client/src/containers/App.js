@@ -61,7 +61,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         handleLogin: response => {
-            axios.post(`http://localhost:3001/api/users`, {
+            axios.post(`https://calm-dawn-71518.herokuapp.com/api/users`, {
                 userName: response.profileObj.email
             })
             dispatch(login(response.profileObj.email));

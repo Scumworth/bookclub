@@ -16,7 +16,7 @@ ReactDOM.render(
         <ConnectedRouter history = { history }>
             <div>
                 <App 
-                    baseUrl = "http://localhost:3001/api"
+                    baseUrl = "https://calm-dawn-71518.herokuapp.com//api"
                 />
             </div>
         </ConnectedRouter>
