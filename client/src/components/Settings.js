@@ -3,7 +3,7 @@
 import React from 'react';
 import { Form, FormControl, Button, Row, Col } from 'react-bootstrap';
 
-const Settings = ({ handleSubmit, handleChangeFirstName, handleChangeLastName,
+const Settings = ({ handleSubmit, handleChangeFirstName, handleChangeLastName, userName,
     handleChangeGeoState, handleChangeCity, baseUrl, city, geoState, firstName, lastName
 }) => (
     <div style = {{ textAlign: 'center', margin: 50 }}>

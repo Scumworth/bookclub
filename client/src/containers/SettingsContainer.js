@@ -21,6 +21,7 @@ class SettingsContainer extends Component {
                     geoState = { this.props.geoState }
                     firstName = { this.props.firstName }
                     lastName = { this.props.lastName }
+                    userName = { this.props.userName }
                 />
             </div>
         );
