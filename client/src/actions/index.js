@@ -7,6 +7,10 @@ export const RECEIVE_ALL_BOOKS = 'RECEIVE_ALL_BOOKS';
 export const REQUEST_MY_BOOKS = 'REQUEST_MY_BOOKS';
 export const RECEIVE_MY_BOOKS = 'RECEIVE_MY_BOOKS];'
 export const SELECT_TITLE = 'SELECT_TITLE';
+export const REQUEST_MY_REQUESTS = 'REQUEST_MY_REQUESTS';
+export const RECEIVE_MY_REQUESTS = 'RECEIVE_MY_REQUESTS';
+export const REQUEST_ALL_REQUESTS = 'REQUEST_ALL_REQUESTS';
+export const RECEIVE_ALL_REQUESTS = 'RECEIVE_ALL_REQUESTS';
 
 export const login = (user) => ({
     type: LOGIN_USER,
@@ -61,6 +65,48 @@ export const getMyBooks = (baseUrl, userName) => dispatch => {
         }, e => console.log(e))
         .then(data => {
             dispatch(receiveMyBooks(data));
+        });
+}
+
+export const requestMyRequests = () => ({
+    type: REQUEST_MY_REQUESTS
+});
+
+export const receiveMyRequests = (data) => ({
+    type: RECEIVE_MY_REQUESTS,
+    myRequestsResults: {...data}
+});
+
+export const getMyRequests = (baseUrl, userName) => dispatch => {
+    dispatch(requestMyRequests);
+    axios.get(`${baseUrl}/myrequests`, {
+        params: {userName: userName}
+    })
+        .then(res => {
+            return res.data
+        }, e => console.log(e))
+        .then(data => {
+            dispatch(receiveMyRequests(data))
+        });
+}
+
+export const requestAllRequests = () => ({
+    type: REQUEST_ALL_REQUESTS
+})
+
+export const receiveAllRequests = (data) => ({
+    type: RECEIVE_ALL_REQUESTS,
+    allRequestsResults: data.map(request => ({...request}))
+})
+
+export const getAllRequests = (baseUrl) => dispatch => {
+    dispatch(requestAllRequests);
+    axios.get(`${baseUrl}/allrequests`)
+        .then(res => {
+            return res.data;
+        }, e => console.log(e))
+        .then(data => {
+            dispatch(receiveAllRequests(data))
         });
 }
 

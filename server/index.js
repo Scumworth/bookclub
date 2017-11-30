@@ -6,6 +6,7 @@ const cors = require('cors');
 const { mongoose } = require('./db/mongoose');
 const { Book } = require('./models/book');
 const { User } = require('./models/user');
+const { Request } = require('./models/request');
 const path = require('path');
 const bodyParser = require('body-parser');
 const router = express.Router();
@@ -118,7 +119,7 @@ router.route('/mybooks')
                     res.send({ message: 'User had been removed from book' })
                     if(book.users.length === 0){
                         Book.remove({ title: req.body.title }).then(book => {
-                            console.log(`${book.title} has no more users so it has been removed`);
+                            console.log(`Book has no more users so it has been removed`);
                         }, (e) => res.status(400).send(e))
                     }
                 }, (e) => res.status(400).send(e));
@@ -127,7 +128,67 @@ router.route('/mybooks')
         })
     })
 
-        
+router.route('/myrequests')
+    .get((req, res) => {
+        Request.find({}).then((requests) => {
+            if (requests.length > 0) {
+                const userRequests = { requestedFrom: [], requestedBy: [] }
+                for (let i = 0; i < requests.length; i++) {
+                    if (requests[i].requestedFrom === req.query.userName) {
+                        userRequests.requestedFrom.push({ 
+                            title: requests[i].title, 
+                            requestedFrom: req.query.userName, 
+                            requestedBy: requests[i].requestedBy,
+                            thumbnail: requests[i].thumbnail
+                        });
+                    }    
+                    else if(requests[i].requestedBy === req.query.userName) {
+                        userRequests.requestedBy.push({ 
+                            title: requests[i].title, 
+                            requestedFrom: requests[i].requestedFrom,
+                            requestedBy: req.query.userName,
+                            thumbnail: requests[i].thumbnail
+                        });
+                    }
+                }
+                res.json(userRequests);
+            }
+            else {
+                res.json( { requestedFrom: [], requestedBy:[] });
+            }
+        })
+    })
+
+router.route('/allrequests')
+    .get((req, res) => {
+        Request.find({}).then((requests) => {
+            res.json(requests);
+        })
+    })
+    .delete((req, res) => {
+        console.log('title', req.query.title);
+        Request.remove({ title: req.query.title })
+            .then(request => {
+                console.log('Request removed');
+                res.send({ message: 'Request deleted'})
+            }, (e) => res.status(400).send(e))
+    })
+    .post((req, res) => {
+        Book.findOne({ title: req.body.title }).then((book) => {
+            if(book && book.users.indexOf(req.body.userName) === -1) {
+                const userRequestedFrom = book.users[0];
+                const request = new Request({
+                    title: req.body.title,
+                    thumbnail: req.body.thumbnail,
+                    requestedFrom: userRequestedFrom,
+                    requestedBy: req.body.userName
+                })
+                request.save().then((request) => {
+                    res.send({ message: 'New request added.'});
+                }, e => res.status(400).send(e))
+            }
+        })
+    })
 
 app.use('/api', router);
 

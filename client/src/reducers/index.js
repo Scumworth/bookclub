@@ -7,7 +7,11 @@ import {
     RECEIVE_ALL_BOOKS,
     REQUEST_MY_BOOKS,
     RECEIVE_MY_BOOKS,
-    SELECT_TITLE
+    SELECT_TITLE,
+    REQUEST_MY_REQUESTS,
+    RECEIVE_MY_REQUESTS,
+    REQUEST_ALL_REQUESTS,
+    RECEIVE_ALL_REQUESTS
 } from '../actions';
 
 export const login = (state = {
@@ -116,5 +120,56 @@ export const myBooks = (state = {
             return state;
     }
 }
+
+export const myRequests = (state = {
+    myRequestsLoaded: false,
+    isFetchingMyRequests: false,
+    myRequestsResults: []
+}, action) => {
+    switch (action.type) {
+        case REQUEST_MY_REQUESTS:
+            return {
+                ...state,
+                isFetchingMyRequests: true
+            }
+        case RECEIVE_MY_REQUESTS:
+            return {
+                ...state,
+                isFetchingMyRequests: false,
+                myRequestsLoaded: true,
+                myRequestsResults: action.myRequestsResults
+            }
+        default: 
+            return state;
+    }
+}
+
+export const allRequests = (state = {
+    allRequestsLoaded: false,
+    isFetchingAllRequests: false,
+    allRequestsResults: []
+}, action) => {
+   switch (action.type) {
+        case REQUEST_ALL_REQUESTS:
+           return {
+                ...state,
+                isFetchingAllRequests: true
+            }
+        case RECEIVE_ALL_REQUESTS:
+           return {
+               ...state,
+               isFetchingAllRequests: false,
+               allRequestsLoaded: true,
+               allRequestsResults: action.allRequestsResults
+           }
+        default:
+           return state;
+    }
+}
+
+
+
+
+
 
 

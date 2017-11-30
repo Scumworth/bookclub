@@ -6,33 +6,42 @@ import MyBooks from './../components/MyBooks';
 import axios from 'axios';
 import books from 'google-books-search';
 import { selectTitle, getMyBooks } from './../actions';
+const Loader = require('react-loader');
 
 class MyBooksContainer extends Component {
     componentDidMount() {
-       this.props.getMyBooks(this.props.baseUrl, this.props.userName); 
+        this.props.getMyBooks(this.props.baseUrl, this.props.userName); 
+        this.props.getMyRequests(this.props.baseUrl, this.props.userName);
+       
     }
     render() {
         return (
             <div>
-                <MyBooks 
-                    baseUrl = { this.props.baseUrl } 
-                    handleSubmit = { this.props.handleSubmit } 
-                    selectedTitle = { this.props.title } 
-                    handleChange = { this.props.handleChange } 
-                    userName = { this.props.userName } 
-                    myBooksResults = { this.props.myBooksResults }
-                    handleRemove = { this.props.handleRemove } 
-                />
+                <Loader loaded = { (this.props.myBooksLoaded && this.props.myRequestsLoaded) }>
+                    <MyBooks 
+                        baseUrl = { this.props.baseUrl } 
+                        handleSubmit = { this.props.handleSubmit } 
+                        selectedTitle = { this.props.title } 
+                        handleChange = { this.props.handleChange } 
+                        userName = { this.props.userName } 
+                        myBooksResults = { this.props.myBooksResults }
+                        myRequestsResults = { this.props.myRequestsResults }
+                        handleRemove = { this.props.handleRemove } 
+                        handleCancel = { this.props.handleCancel }
+                        handleConfirm = { this.props.handleConfirm }
+                    />
+                </Loader>
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    const { book, myBooks } = state;
+    const { book, myBooks, myRequests } = state;
     const { title } = book;
     const { myBooksLoaded, isFetchingMyBooks, myBooksResults } = myBooks;
-    return { title, myBooksLoaded, isFetchingMyBooks, myBooksResults };
+    const { myRequestsLoaded, isFetchingMyRequests, myRequestsResults } = myRequests;
+    return { title, myBooksLoaded, isFetchingMyBooks, myBooksResults, myRequestsLoaded, isFetchingMyRequests, myRequestsResults };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -83,8 +92,7 @@ const mapDispatchToProps = (dispatch) => {
             axios.patch(`${baseUrl}/mybooks`, {
                 title,
                 userName
-            }).then(() => console.log('hello'))
-                .catch(e => console.log(e));
+            }).catch(e => console.log(e));
         },
         handleChange: (e) => {
             e.preventDefault();
